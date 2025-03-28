@@ -16,23 +16,18 @@ class Sin : TrigonometricalFunction {
 
         val xNorm = normalize(x)
 
-        var calc = xNorm - xNorm.pow(3) / 6.0 + xNorm.pow(5) / 120.0
-        var prev: Double
-        var i = 3
-        var fact = 120.0
-
-        do {
+        var calc = xNorm - xNorm.pow(3) / 6 + xNorm.pow(5) / 120 - xNorm.pow(7) / 5040
+        var prev = 0.0
+        var i = 4
+        var fact = 5040
+        while (abs(prev - calc) > eps) {
             prev = calc
-            fact *= 2*i * (2*i + 1)
-            val coefficient = (-1.0).pow(i) / fact
-            calc += coefficient * xNorm.pow(2*i + 1)
+            fact *= 2 * i * (2 * i + 1)
+            val term = xNorm.pow(2 * i + 1) * (-1.0).pow(i) / fact
+            calc += term
             i++
-        } while (abs(calc - prev) > eps)
-
-        if (abs(calc) < eps) return 0.0
-        if (abs(calc - 1) < eps) return 1.0
+        }
         return calc
-
     }
 
 }
