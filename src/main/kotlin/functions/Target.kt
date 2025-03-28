@@ -16,6 +16,11 @@ class Target(
         if (eps <= 0.0) throw IllegalArgumentException("eps has to be > 0")
         if (x == 0.0) throw IllegalArgumentException("target function is undefined on x = 0")
 
+        return doCalculate(x, eps)
+
+    }
+
+    private fun doCalculate(x: Double, eps: Double): Double {
         var result: Double
 
         if (x <= 0) {
@@ -44,7 +49,6 @@ class Target(
         }
 
         return result
-
     }
 
 }
