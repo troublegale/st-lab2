@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.mockito.Mockito
 import java.io.FileReader
+import java.io.FileWriter
 
 class FunctionTests {
 
@@ -63,6 +64,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with mocks`(input: Double, expected: Double) {
         val target = Target(sinMock, tanMock, lnMock, log2Mock, log3Mock)
+        val writer = FileWriter("src/test/resources/results/res1.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -70,6 +74,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with tan`(input: Double, expected: Double) {
         val target = Target(sinMock, Tan(sinMock), lnMock, log2Mock, log3Mock)
+        val writer = FileWriter("src/test/resources/results/res2.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -77,6 +84,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with sin`(input: Double, expected: Double) {
         val target = Target(Sin(), Tan(Sin()), lnMock, log2Mock, log3Mock)
+        val writer = FileWriter("src/test/resources/results/res3.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -84,6 +94,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with log2`(input: Double, expected: Double) {
         val target = Target(sinMock, tanMock, lnMock, Log2(lnMock), log3Mock)
+        val writer = FileWriter("src/test/resources/results/res4.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -91,6 +104,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with log3`(input: Double, expected: Double) {
         val target = Target(sinMock, tanMock, lnMock, log2Mock, Log3(lnMock))
+        val writer = FileWriter("src/test/resources/results/res5.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -98,6 +114,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with log2 and log3`(input: Double, expected: Double) {
         val target = Target(sinMock, tanMock, lnMock, Log2(lnMock), Log3(lnMock))
+        val writer = FileWriter("src/test/resources/results/res6.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -105,6 +124,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with ln`(input: Double, expected: Double) {
         val target = Target(sinMock, tanMock, Ln(), Log2(Ln()), Log3(Ln()))
+        val writer = FileWriter("src/test/resources/results/res7.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
@@ -112,6 +134,9 @@ class FunctionTests {
     @CsvFileSource(resources = ["/TargetIn.csv"])
     fun `Target with everything`(input: Double, expected: Double) {
         val target = Target(Sin(), Tan(Sin()), Ln(), Log2(Ln()), Log3(Ln()))
+        val writer = FileWriter("src/test/resources/results/res8.csv", true)
+        target.writeToCSV(input, funEps, writer)
+        writer.close()
         assertEquals(expected, target.calculate(input, funEps), testEps)
     }
 
