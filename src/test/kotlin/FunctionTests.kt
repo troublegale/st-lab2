@@ -25,7 +25,7 @@ class FunctionTests {
 
         @JvmStatic
         @BeforeAll
-        fun init(): Unit {
+        fun init() {
             val lnReader = FileReader("src/test/resources/mocks/LnMock.csv")
             val log2Reader = FileReader("src/test/resources/mocks/Log2Mock.csv")
             val log3Reader = FileReader("src/test/resources/mocks/Log3Mock.csv")
