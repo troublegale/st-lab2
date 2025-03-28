@@ -2,6 +2,7 @@ package functions
 
 import functions.interfaces.TrigonometricalFunction
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -21,8 +22,10 @@ class Tan(private val sin: Sin) : TrigonometricalFunction {
         if (xNorm == -PI / 2.0) return Double.NEGATIVE_INFINITY
 
         val sinVal = sin.calculate(xNorm, eps)
+        var cosVal = sqrt(1 - sinVal.pow(2))
+        if (abs(xNorm) > PI / 2.0 && abs(xNorm) < 3.0 * PI / 2.0) cosVal *= -1
 
-        return sinVal / sqrt(1 - sinVal.pow(2))
+        return sinVal / cosVal
 
     }
 
