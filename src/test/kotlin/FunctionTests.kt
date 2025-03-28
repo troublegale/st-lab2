@@ -10,26 +10,26 @@ import java.io.FileReader
 class FunctionTests {
 
     private val funEps = 0.00001
-    private val testEps = 0.5
+    private val testEps = 0.1
 
     companion object {
 
-        private const val EPS = 0.01
+        private const val EPS = 0.00001
 
-        private var lnMock: Ln = Mockito.mock(Ln::class.java)
-        private var log2Mock: Log2 = Mockito.mock(Log2::class.java)
-        private var log3Mock: Log3 = Mockito.mock(Log3::class.java)
-        private var sinMock: Sin = Mockito.mock(Sin::class.java)
-        private var tanMock: Tan = Mockito.mock(Tan::class.java)
+        private var lnMock = Mockito.mock(Ln::class.java)
+        private var log2Mock = Mockito.mock(Log2::class.java)
+        private var log3Mock = Mockito.mock(Log3::class.java)
+        private var sinMock = Mockito.mock(Sin::class.java)
+        private var tanMock = Mockito.mock(Tan::class.java)
 
         @JvmStatic
         @BeforeAll
         fun init(): Unit {
             val lnReader = FileReader("src/test/resources/mocks/LnMock.csv")
-            val log2Reader = FileReader("src/test/resources/mocks/LnMock.csv")
-            val log3Reader = FileReader("src/test/resources/mocks/LnMock.csv")
-            val sinReader = FileReader("src/test/resources/mocks/LnMock.csv")
-            val tanReader = FileReader("src/test/resources/mocks/LnMock.csv")
+            val log2Reader = FileReader("src/test/resources/mocks/Log2Mock.csv")
+            val log3Reader = FileReader("src/test/resources/mocks/Log3Mock.csv")
+            val sinReader = FileReader("src/test/resources/mocks/SinMock.csv")
+            val tanReader = FileReader("src/test/resources/mocks/TanMock.csv")
 
             var records = CSVFormat.DEFAULT.parse(lnReader)
             for (record in records) {
