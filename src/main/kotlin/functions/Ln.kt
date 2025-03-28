@@ -1,6 +1,7 @@
 package functions
 
 import functions.interfaces.Function
+import kotlin.math.abs
 import kotlin.math.pow
 
 class Ln : Function {
@@ -14,20 +15,30 @@ class Ln : Function {
         if (x == 0.0) return Double.NEGATIVE_INFINITY
         if (x == Double.POSITIVE_INFINITY) return Double.POSITIVE_INFINITY
 
-        val term = (x - 1) / (x + 1)
+        var invert = false
+        var xVal = x
+        if (x > 2.0) {
+            xVal = 1.0 / x
+            invert = true
+        }
 
-        var calc = term + 1.0/3.0 * term.pow(3) + 1.0/5.0 * term.pow(5)
-        var prev: Double
-        var i = 7.0
+        var res = doCalculate(xVal, eps)
+        if (invert) res *= -1
+        return res
 
-        do {
+    }
+
+    private fun doCalculate(x: Double, eps: Double): Double {
+        val term = x - 1
+        var calc = term - term.pow(2) / 2 + term.pow(3) / 3 - term.pow(4) / 4
+        var prev = 0.0
+        var i = 5
+        while (abs(calc - prev) > eps) {
             prev = calc
-            calc += 1.0/i * term.pow(i)
-            i += 2
-        } while (calc - prev > eps)
-
-        return 2 * calc
-
+            calc += (-1.0).pow(i + 1) * term.pow(i) / i
+            i++
+        }
+        return calc
     }
 
 }
