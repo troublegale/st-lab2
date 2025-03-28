@@ -1,28 +1,68 @@
-import org.apache.commons.csv.CSVFormat
-import java.io.FileReader
-import kotlin.math.*
+import functions.*
+import java.io.FileWriter
 
 fun main() {
-    val reader = FileReader("src/test/resources/TargetIn.csv")
-    val records = CSVFormat.DEFAULT.parse(reader)
-    for (record in records) {
-        val y = target(record.get(0).toDouble())
-        println("${record.get(0).toDouble()}, $y")
-    }
+    writeAllResultsToCSV(-4.0, -2.0, 0.1, 0.0001)
+    writeAllResultsToCSV(0.5, 2.5, 0.1, 0.0001)
 }
 
-fun target(x: Double): Double {
-    if (x <= 0) {
-        var result = (tan(x) + sin(x)) / sin(x)
-        result = result.pow(2)
-        result = result.pow(3)
-        result /= sin(x)
-        return result
+fun writeAllResultsToCSV(from: Double, to: Double, step: Double, eps: Double) {
+    val sin = Sin()
+    val sinWriter = FileWriter("src/main/resources/sin.csv", true)
+
+    val tan = Tan(sin)
+    val tanWriter = FileWriter("src/main/resources/tan.csv", true)
+
+    val ln = Ln()
+    val lnWriter = FileWriter("src/main/resources/ln.csv", true)
+
+    val log2 = Log2(ln)
+    val log2Writer = FileWriter("src/main/resources/log2.csv", true)
+
+    val log3 = Log3(ln)
+    val log3Writer = FileWriter("src/main/resources/log3.csv", true)
+
+    val target = Target(sin, tan, ln, log2, log3)
+    val targetWriter = FileWriter("src/main/resources/target.csv", true)
+
+    var i = 0
+    while (from + i * step <= to) {
+        val x = from + i * step
+
+        sin.writeToCSV(x, eps, sinWriter)
+
+        tan.writeToCSV(x, eps, tanWriter)
+
+        try {
+            ln.writeToCSV(x, eps, lnWriter)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        try {
+            log2.writeToCSV(x, eps, log2Writer)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        try {
+            log3.writeToCSV(x, eps, log3Writer)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        try {
+            target.writeToCSV(x, eps, targetWriter)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        i++
     }
-    var result = ln(x) * log2(x)
-    result = result.pow(3)
-    result += ln(x) / ln(3.0)
-    result *= log2(x)
-    result = result.pow(3)
-    return result
+    sinWriter.close()
+    tanWriter.close()
+    lnWriter.close()
+    log2Writer.close()
+    log3Writer.close()
+    targetWriter.close()
 }
