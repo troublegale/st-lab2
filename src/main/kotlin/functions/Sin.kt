@@ -16,14 +16,19 @@ class Sin : TrigonometricalFunction {
 
         val xNorm = normalize(x)
 
-        var calc = xNorm - xNorm.pow(3) / 6 + xNorm.pow(5) / 120 - xNorm.pow(7) / 5040
+        return doCalculate(xNorm, eps)
+
+    }
+
+    private fun doCalculate(x: Double, eps: Double): Double {
+        var calc = x - x.pow(3) / 6 + x.pow(5) / 120 - x.pow(7) / 5040
         var prev = 0.0
         var i = 4
         var fact = 5040
         while (abs(prev - calc) > eps) {
             prev = calc
             fact *= 2 * i * (2 * i + 1)
-            val term = xNorm.pow(2 * i + 1) * (-1.0).pow(i) / fact
+            val term = x.pow(2 * i + 1) * (-1.0).pow(i) / fact
             calc += term
             i++
         }
