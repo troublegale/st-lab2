@@ -24,7 +24,7 @@ class Sin : TrigonometricalFunction {
         var calc = x - x.pow(3) / 6 + x.pow(5) / 120 - x.pow(7) / 5040
         var prev = 0.0
         var i = 4
-        var fact = 5040
+        var fact = 5040L
         while (abs(prev - calc) > eps) {
             prev = calc
             fact *= 2 * i * (2 * i + 1)
